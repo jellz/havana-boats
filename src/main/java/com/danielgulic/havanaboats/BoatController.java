@@ -85,6 +85,6 @@ public class BoatController {
                     removeFuelFromBoat(uuid, 1);
                 }
             }
-        }, 0L, 120L);
+        }, 0L, 40L);
     }
 }
