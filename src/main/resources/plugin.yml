@@ -1,0 +1,24 @@
+name: HavanaBoats
+version: ${project.version}
+main: com.danielgulic.havanaboats.HavanaBoats
+api-version: 1.13
+authors: [jellz]
+description: Boats for Havana
+database: true
+commands:
+  engine:
+    aliases: [eng]
+    permission: havanaboats.engine
+    usage: '/engine'
+    description: 'Toggle boat engine'
+  reloadhavanaboats:
+    permission: havanaboats.reload
+    usage: '/reloadhavanaboats'
+    description: 'Reload Havana Boats configuration'
+#permissions:
+#  havanaboats.engine:
+#    description: 'Gives access to /engine'
+#    default: true
+#  havanaboats.fuel:
+#    description: 'Allows the player to refuel a boat'
+#    default: true
