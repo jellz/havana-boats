@@ -15,8 +15,12 @@ public class BoatCommands implements CommandExecutor {
 				Player player = (Player) sender;
 				if (player.isInsideVehicle() && (player.getVehicle() instanceof Boat)) {
 					BoatController boatController = HavanaBoats.getBoatController();
-					boolean engineToggle = boatController.toggleEngine(player.getVehicle().getUniqueId());
-					sender.sendMessage(engineToggle ? ChatColor.GREEN + "Engine started" : ChatColor.RED + "Engine stopped");
+					if (boatController.isBoatRegistered(player.getVehicle().getUniqueId())) {
+						boolean engineToggle = boatController.toggleEngine(player.getVehicle().getUniqueId());
+						sender.sendMessage(engineToggle ? ChatColor.GREEN + "Engine started" : ChatColor.RED + "Engine stopped");
+					} else {
+						sender.sendMessage(ChatColor.RED + "This boat is not registered. Please place a new boat.");
+					}
 				} else {
 					sender.sendMessage(ChatColor.RED + "You must be in a boat to use this command!");
 				}
