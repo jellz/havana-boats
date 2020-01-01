@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Boat;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 public class BoatCommands implements CommandExecutor {
@@ -15,8 +16,9 @@ public class BoatCommands implements CommandExecutor {
 				Player player = (Player) sender;
 				if (player.isInsideVehicle() && (player.getVehicle() instanceof Boat)) {
 					BoatController boatController = HavanaBoats.getBoatController();
-					if (boatController.isBoatRegistered(player.getVehicle().getUniqueId())) {
-						boolean engineToggle = boatController.toggleEngine(player.getVehicle().getUniqueId());
+					Entity vehicle = player.getVehicle();
+					if (boatController.isBoatRegistered(vehicle.getUniqueId())) {
+						boolean engineToggle = boatController.toggleEngine(vehicle.getUniqueId());
 						sender.sendMessage(engineToggle ? ChatColor.GREEN + "Engine started" : ChatColor.RED + "Engine stopped");
 					} else {
 						sender.sendMessage(ChatColor.RED + "This boat is not registered. Please place a new boat.");
