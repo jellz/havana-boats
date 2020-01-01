@@ -103,6 +103,7 @@ public class EventListener implements Listener {
         Vehicle vehicle = event.getVehicle();
         if (vehicle.getType() != EntityType.BOAT) return;
         BoatController boatController = HavanaBoats.getBoatController();
+        if (!boatController.isBoatRegistered(vehicle.getUniqueId())) return;
         boatController.unregisterBoat(vehicle.getUniqueId());
     }
 
