@@ -82,7 +82,7 @@ public class BoatController {
                 if (entity == null) {
 //                    HavanaBoats.get().getServer().broadcastMessage("entity == null");
                     // remove from db
-                    unregisterBoat(uuid);
+//                    unregisterBoat(uuid);
                     return;
                 }
                 if (isEngineDisabled(uuid)) {
