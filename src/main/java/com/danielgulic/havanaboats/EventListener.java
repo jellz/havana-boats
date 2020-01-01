@@ -104,7 +104,8 @@ public class EventListener implements Listener {
         if (vehicle.getType() != EntityType.BOAT) return;
         BoatController boatController = HavanaBoats.getBoatController();
         if (!boatController.isBoatRegistered(vehicle.getUniqueId())) return;
-        vehicle.getWorld().dropItemNaturally(vehicle.getLocation(), new ItemStack(Material.COAL_BLOCK, boatController.getFuelLevel(vehicle.getUniqueId()) / 20));
+        int droppedBlocks = boatController.getFuelLevel(vehicle.getUniqueId()) / 20;
+        if (droppedBlocks > 0) vehicle.getWorld().dropItemNaturally(vehicle.getLocation(), new ItemStack(Material.COAL_BLOCK, droppedBlocks));
         boatController.unregisterBoat(vehicle.getUniqueId());
     }
 
