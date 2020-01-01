@@ -1,6 +1,7 @@
 package com.danielgulic.havanaboats;
 
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.*;
@@ -78,11 +79,25 @@ public class BoatController {
                 Integer fuel = entry.getValue();
                 UUID uuid = UUID.fromString(uuidString);
                 Entity entity = Util.getEntityByUniqueId(uuid);
-                if (entity == null) return;
-                if (isEngineDisabled(uuid)) return;
+                if (entity == null) {
+//                    HavanaBoats.get().getServer().broadcastMessage("entity == null");
+                    // remove from db
+                    unregisterBoat(uuid);
+                    return;
+                }
+                if (isEngineDisabled(uuid)) {
+//                    HavanaBoats.get().getServer().broadcastMessage("isEngineDisabled = true");
+                    return;
+                }
 
-                if (entity.getPassengers().size() > 0) { // someone is using the boat so it will consume fuel
+                ArrayList<Entity> playersInBoat = new ArrayList<Entity>();
+                for (Entity e : entity.getPassengers())
+                    if (e instanceof Player) playersInBoat.add(e);
+                if (playersInBoat.size() > 0) { // someone is using the boat so it will consume fuel
                     removeFuelFromBoat(uuid, 1);
+//                    HavanaBoats.get().getServer().broadcastMessage("removed 1 fuel from boat");
+                } else {
+//                    HavanaBoats.get().getServer().broadcastMessage("passengers <= 0 so didnt remove fuel");
                 }
             }
         }, 0L, 40L);
