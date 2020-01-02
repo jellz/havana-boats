@@ -1,5 +1,7 @@
 package com.danielgulic.havanaboats;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Boat;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -74,30 +76,35 @@ public class BoatController {
         BukkitScheduler scheduler = this.instance.getServer().getScheduler();
         scheduler.scheduleSyncRepeatingTask(this.instance, () -> {
             // Loop through all registered boats every 120 ticks
-            for (Map.Entry<String, Integer> entry : fuelLevel.entrySet()) {
-                String uuidString = entry.getKey();
-                Integer fuel = entry.getValue();
-                UUID uuid = UUID.fromString(uuidString);
-                Entity entity = Util.getEntityByUniqueId(uuid);
-                if (entity == null) {
+//            for (Map.Entry<String, Integer> entry : fuelLevel.entrySet()) {
+//                String uuidString = entry.getKey();
+//                Integer fuel = entry.getValue();
+//                UUID uuid = UUID.fromString(uuidString);
+//                Entity entity = Util.getEntityByUniqueId(uuid);
+//                if (entity == null) {
 //                    HavanaBoats.get().getServer().broadcastMessage("entity == null");
-                    // remove from db
-//                    unregisterBoat(uuid);
-                    return;
-                }
-                if (isEngineDisabled(uuid)) {
+//                    // remove from db
+////                    unregisterBoat(uuid);
+//                    return;
+//                }
+//                if (isEngineDisabled(uuid)) {
 //                    HavanaBoats.get().getServer().broadcastMessage("isEngineDisabled = true");
-                    return;
-                }
-
-                ArrayList<Entity> playersInBoat = new ArrayList<Entity>();
-                for (Entity e : entity.getPassengers())
-                    if (e instanceof Player) playersInBoat.add(e);
-                if (playersInBoat.size() > 0) { // someone is using the boat so it will consume fuel
-                    removeFuelFromBoat(uuid, 1);
+//                    return;
+//                }
+//
+//                ArrayList<Entity> playersInBoat = new ArrayList<Entity>();
+//                for (Entity e : entity.getPassengers())
+//                    if (e instanceof Player) playersInBoat.add(e);
+//                if (playersInBoat.size() > 0) { // someone is using the boat so it will consume fuel
+//                    removeFuelFromBoat(uuid, 1);
 //                    HavanaBoats.get().getServer().broadcastMessage("removed 1 fuel from boat");
-                } else {
+//                } else {
 //                    HavanaBoats.get().getServer().broadcastMessage("passengers <= 0 so didnt remove fuel");
+//                }
+//            }
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                if (p.isInsideVehicle() && (p.getVehicle() instanceof Boat) && isBoatRegistered(p.getVehicle().getUniqueId()) && !isEngineDisabled(p.getVehicle().getUniqueId())) {
+                    removeFuelFromBoat(p.getVehicle().getUniqueId(), 1);
                 }
             }
         }, 0L, 40L);
