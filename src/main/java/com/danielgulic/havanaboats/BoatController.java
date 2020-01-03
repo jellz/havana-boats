@@ -107,6 +107,6 @@ public class BoatController {
                     removeFuelFromBoat(p.getVehicle().getUniqueId(), 1);
                 }
             }
-        }, 0L, 75L);
+        }, 0L, 80L);
     }
 }
