@@ -36,6 +36,7 @@ public class BoatController {
         int newFuel = currentFuel + fuel;
         if (newFuel > 100) newFuel = 100;
         fuelLevel.put(uuid.toString(), newFuel);
+        HavanaBoats.getDb().commit();
     }
 
     public void removeFuelFromBoat(UUID uuid, int fuel) {
@@ -43,6 +44,7 @@ public class BoatController {
         int newFuel = currentFuel - fuel;
         if (newFuel < 0) newFuel = 0;
         fuelLevel.put(uuid.toString(), newFuel);
+        HavanaBoats.getDb().commit();
     }
 
     public int getFuelLevel(UUID uuid) {

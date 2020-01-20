@@ -14,6 +14,7 @@ public final class HavanaBoats extends JavaPlugin {
     private static DB db;
 
     public static HavanaBoats get() { return instance; }
+    public static DB getDb() { return db; }
     public static BoatController getBoatController() { return boatController; }
 
     @Override
